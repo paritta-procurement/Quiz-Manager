@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Your Management Style? · Procurement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --papel:#F5F6F4;
+    --tinta:#131917;
+    --cinza:#5B615E;
+    --linha:#D8DCD7;
+    --branco:#FFFFFF;
+    --petroleo:#0B5A50;
+    --petroleo-claro:#E3EEEB;
+    --c1:#B03434;
+    --c2:#5A54C9;
+    --c3:#C65D8B;
+    --c4:#D97A1F;
+    --c5:#1F8A70;
+    --c6:#2E7DB3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--papel);
+    color:var(--tinta);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    font-size:16px;line-height:1.55;
+    padding:20px 16px 64px;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+  .mono{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza)}
+  h1,h2,h3{font-family:'Archivo',sans-serif;letter-spacing:-.015em}
+
+  .masthead{padding:8px 0 28px;border-bottom:1px solid var(--linha);margin-bottom:28px}
+  .masthead .mono{display:block;margin-bottom:10px}
+  .masthead h1{font-size:clamp(28px,6vw,40px);font-weight:800;line-height:1.08}
+  .masthead p{margin-top:10px;color:var(--cinza);max-width:56ch}
+
+  .intro-grid{display:grid;gap:12px;margin:20px 0 20px}
+  .fact{background:var(--branco);border:1px solid var(--linha);border-radius:10px;padding:14px 16px;display:flex;gap:12px;align-items:baseline}
+  .fact .mono{flex:0 0 auto;color:var(--petroleo)}
+  .fact span:last-child{color:var(--tinta)}
+  .campo-nome{margin:4px 0 20px}
+  .campo-nome label{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza);margin-bottom:6px}
+  .campo-nome input{
+    width:100%;max-width:340px;padding:12px 14px;font:inherit;
+    background:var(--branco);border:1px solid var(--linha);border-radius:10px;color:var(--tinta);
+  }
+  .campo-nome input:focus{outline:3px solid var(--petroleo);outline-offset:1px;border-color:var(--petroleo)}
+  .aviso{font-size:13.5px;color:var(--cinza);margin-top:18px}
+
+  .btn{
+    display:inline-block;border:none;cursor:pointer;
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;
+    background:var(--petroleo);color:#fff;border-radius:10px;
+    padding:14px 26px;transition:transform .12s ease,background .12s ease;
+  }
+  .btn:hover{background:#0d6b5f}
+  .btn:active{transform:scale(.98)}
+  .btn:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--petroleo);outline-offset:2px}
+  .btn-ghost{background:transparent;color:var(--petroleo);border:1px solid var(--petroleo)}
+  .btn-ghost:hover{background:var(--petroleo-claro)}
+
+  .ticks{display:flex;gap:5px;margin:4px 0 18px}
+  .ticks span{flex:1;height:5px;border-radius:3px;background:var(--linha);transition:background .2s}
+  .ticks span.done{background:var(--petroleo)}
+  .ticks span.atual{background:var(--petroleo);opacity:.35}
+
+  .q-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+  .q-back{background:none;border:none;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza);padding:4px 0}
+  .q-back:hover{color:var(--petroleo)}
+  .q-back[hidden]{display:none}
+
+  .cenario{
+    background:var(--branco);border:1px solid var(--linha);border-radius:12px;
+    padding:22px 20px;margin-bottom:16px;
+  }
+  .cenario h2{font-size:clamp(19px,4.6vw,23px);font-weight:700;line-height:1.3}
+
+  .opcoes{display:grid;gap:10px}
+  .opcao{
+    text-align:left;background:var(--branco);border:1px solid var(--linha);
+    border-left:4px solid var(--linha);border-radius:10px;
+    padding:14px 16px;font:inherit;color:var(--tinta);cursor:pointer;
+    transition:border-color .12s,background .12s,transform .12s;
+  }
+  .opcao:hover{border-left-color:var(--petroleo);background:#FBFCFB}
+  .opcao.selected{border-color:var(--petroleo);border-left-color:var(--petroleo);background:var(--petroleo-claro)}
+  .opcao:disabled{cursor:default;opacity:.75}
+  .opcao:disabled.selected{opacity:1}
+
+  .fade{animation:fade .22s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .fade{animation:none}
+    *{transition:none!important}
+  }
+
+  .hero{
+    background:var(--branco);border:1px solid var(--linha);border-radius:12px;
+    border-left:6px solid var(--petroleo);
+    padding:24px 22px;margin-bottom:22px;
+  }
+  .hero .mono{display:block;margin-bottom:8px}
+  .hero h2{font-size:clamp(26px,6vw,34px);font-weight:800;line-height:1.1}
+  .hero .lema{font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;margin-top:6px;color:var(--cinza)}
+  .hero p.ess{margin-top:14px}
+  .hero .empate,.hero .secundario{margin-top:12px;font-size:14px;color:var(--cinza)}
+  .hero .secundario b{color:var(--tinta)}
+
+  .bloco{margin-bottom:22px}
+  .bloco > .mono{display:block;margin-bottom:12px}
+
+  .mapa{background:var(--branco);border:1px solid var(--linha);border-radius:12px;padding:18px 14px 12px;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .mapa svg{width:100%;max-width:400px;height:auto}
+  .mapa .eixos-num{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.05em;color:var(--cinza)}
+
+  .versat{background:var(--branco);border:1px solid var(--linha);border-radius:12px;padding:18px 20px;font-size:15px}
+
+  .barra{display:grid;grid-template-columns:118px 1fr 44px;gap:10px;align-items:center;margin-bottom:10px}
+  .barra .nome{font-size:14px;font-weight:600}
+  .barra .trilho{height:12px;background:var(--branco);border:1px solid var(--linha);border-radius:6px;overflow:hidden}
+  .barra .fill{height:100%;border-radius:5px;transition:width .5s ease}
+  .barra .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--cinza);text-align:right}
+
+  details{background:var(--branco);border:1px solid var(--linha);border-radius:10px;margin-bottom:10px;overflow:hidden}
+  summary{
+    cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;
+    padding:14px 16px;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .dot{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+  summary .lm{font-family:'IBM Plex Sans',sans-serif;font-weight:400;color:var(--cinza);font-size:13.5px;margin-left:auto;text-align:right}
+  summary::after{content:'+';font-family:'IBM Plex Mono',monospace;color:var(--cinza);margin-left:8px}
+  details[open] summary::after{content:'−'}
+  .det-corpo{padding:0 16px 16px;font-size:14.5px;display:grid;gap:10px}
+  .det-corpo p b{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--petroleo);display:block;margin-bottom:2px}
+
+  .rodape{margin-top:30px;padding-top:18px;border-top:1px solid var(--linha);font-size:13px;color:var(--cinza)}
+  .acoes{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="mono">Self-assessment · Leading procurement teams</span>
+    <h1>What is your management style?</h1>
+    <p>15 scenarios from the day-to-day of leading a procurement team. Answer with what you <em>would actually do</em> — not with what sounds best.</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="intro">
+    <div class="intro-grid">
+      <div class="fact"><span class="mono">Basis</span><span>Daniel Goleman&rsquo;s six leadership styles (HBR, <i>Leadership That Gets Results</i>).</span></div>
+      <div class="fact"><span class="mono">Format</span><span>15 scenarios, 4 possible reactions each. Pick the one closest to your instinct.</span></div>
+      <div class="fact"><span class="mono">Time</span><span>5 to 7 minutes. You can go back and adjust answers.</span></div>
+      <div class="fact"><span class="mono">Results</span><span>Dominant style, backup style, a profile radar and a reading of your versatility across the six.</span></div>
+    </div>
+    <div class="campo-nome">
+      <label for="nome">Your name (optional — shown in your results)</label>
+      <input type="text" id="nome" maxlength="40" autocomplete="off" placeholder="e.g., Anna">
+    </div>
+    <button class="btn" id="btn-iniciar">Start</button>
+    <p class="aviso">There is no "right" style: the research shows the best leaders switch between several, depending on the situation.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" hidden>
+    <div class="q-head">
+      <span class="mono" id="q-num">Scenario 01/15</span>
+      <button class="q-back" id="btn-voltar" hidden>&larr; Back</button>
+    </div>
+    <div class="ticks" id="ticks"></div>
+    <div id="q-area"></div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="result" hidden>
+    <div class="hero" id="hero"></div>
+
+    <div class="bloco">
+      <span class="mono">Your profile radar</span>
+      <div class="mapa">
+        <div id="radar-svg"></div>
+        <div class="eixos-num">Scaled to your most-used style</div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <span class="mono">Reading your profile</span>
+      <div class="versat" id="versat"></div>
+    </div>
+
+    <div class="bloco">
+      <span class="mono">How your 15 answers split</span>
+      <div id="barras"></div>
+    </div>
+
+    <div class="bloco">
+      <span class="mono">The six styles in detail</span>
+      <div id="detalhes"></div>
+    </div>
+
+    <div class="acoes">
+      <button class="btn" id="btn-copiar">Copy summary</button>
+      <button class="btn btn-ghost" id="btn-refazer">Retake the quiz</button>
+    </div>
+
+    <p class="rodape">Based on Daniel Goleman&rsquo;s six leadership styles ("Leadership That Gets Results", Harvard Business Review, 2000), drawing on the Hay/McBer research with 3,871 executives. A self-perception instrument for reflection — no substitute for formal assessments or 360&deg; feedback.</p>
+  </section>
+
+</div>
+
+<script>
+/* ================= DATA ================= */
+
+const ESTILOS = {
+  DIR:{nome:'Directive', cor:'var(--c1)', lema:'"Do what I tell you."',
+    ess:'Decides fast, centralizes and demands immediate execution, with total clarity on what, who and when.',
+    bom:'Crises and emergencies (plant shutdowns, supply disruptions), compliance breaches, non-negotiable deadlines.',
+    risco:'Used as the default, it smothers initiative, demotivates senior people and creates dependence on you.',
+    dica:'Treat it as an exception tool. Once the crisis passes, explain the why behind the decisions.'},
+  VIS:{nome:'Visionary', cor:'var(--c2)', lema:'"Come with me."',
+    ess:'Mobilizes the team around a clear direction and lets each person decide the how.',
+    bom:'Category-strategy shifts, aggressive savings targets, rolling out new systems and processes.',
+    risco:'Without translation into the routine, it becomes a speech. Loses power with specialists who know the topic better than you.',
+    dica:'Connect the vision to something concrete: what changes in each buyer\u2019s portfolio.'},
+  AFI:{nome:'Affiliative', cor:'var(--c3)', lema:'"People come first."',
+    ess:'Builds bonds, harmony and belonging. Recognizes generously and takes care of the climate.',
+    bom:'Rebuilding trust, periods of overload and stress, reintegrating the team after conflicts.',
+    risco:'Alone, it tolerates weak performance and postpones hard conversations. The team can drift without direction.',
+    dica:'Pair it with clear goals and honest feedback — care is no substitute for direction.'},
+  DEM:{nome:'Democratic', cor:'var(--c5)', lema:'"What do you all think?"',
+    ess:'Builds decisions with the group and wins buy-in through participation.',
+    bom:'Tapping the team\u2019s knowledge of supply markets, redesigning processes, decisions that depend on engagement.',
+    risco:'In excess: too many meetings, slow decisions and a sense of drift — terrible in a crisis.',
+    dica:'Say upfront what is consultation and what is your call. Consensus is not unanimity.'},
+  MOD:{nome:'Pacesetting', cor:'var(--c4)', lema:'"Do as I do, now."',
+    ess:'Sky-high standards and a strong pace: leads by example and takes over whatever falls short.',
+    bom:'Senior, competent, motivated teams; short sprints with critical deliveries.',
+    risco:'Burns the team out and becomes a bottleneck: "it\u2019s faster if I do it myself" doesn\u2019t scale with a team of 15.',
+    dica:'Turn your standard into processes and criteria that others can reproduce without you.'},
+  COA:{nome:'Coaching', cor:'var(--c6)', lema:'"Try it this way."',
+    ess:'Develops people for the long run: delegates challenges as opportunities to grow.',
+    bom:'Clear high-potentials on the team, succession planning, growing the autonomy of assistants and junior buyers.',
+    risco:'Takes time and doesn\u2019t work with those who resist change. In a crisis, it gives way to the directive style.',
+    dica:'According to Goleman, it has the most lasting effect on climate — and is the least used by managers.'}
+};
+
+/* Each style appears exactly 10 times across the 15 scenarios. */
+const QUESTOES = [
+ {c:'A junior buyer\u2019s PR queue has been running late for two weeks.',
+  o:[{s:'AFI',t:'I talk to understand how they are doing — something personal may be weighing — and show they can count on me.'},
+     {s:'DEM',t:'I bring it to the team meeting and we decide together how to redistribute the load and prevent new delays.'},
+     {s:'MOD',t:'I take the most critical PRs myself and show, in practice, the pace I expect.'},
+     {s:'COA',t:'I sit with them, we review how they organize the work and build a plan to grow their prioritization skills.'}]},
+ {c:'Leadership sets an aggressive savings target for next year. How do you engage the team?',
+  o:[{s:'VIS',t:'I present the business context and connect the target to the area\u2019s direction — everyone sees their role in the strategy.'},
+     {s:'DEM',t:'I run workshops so we build the savings initiatives together, category by category.'},
+     {s:'MOD',t:'I set ambitious targets per category and lead by example, delivering mine first.'},
+     {s:'COA',t:'I use the target as a development lever: I hand out the challenges according to what each person needs to learn.'}]},
+ {c:'Two buyers clash over how categories and suppliers are split.',
+  o:[{s:'VIS',t:'I reorganize the categories according to the area\u2019s strategy — the bigger criterion settles the dispute.'},
+     {s:'AFI',t:'Climate first: I talk to both, tend to the relationship and look for a deal that preserves harmony.'},
+     {s:'MOD',t:'I split it myself, based on performance: whoever delivers more gets the more strategic portfolio.'},
+     {s:'COA',t:'I turn the conflict into learning: I facilitate a conversation where they negotiate the solution themselves.'}]},
+ {c:'A global system or process change arrives (e.g., a new flow in the sourcing platform) and the team resists adopting it.',
+  o:[{s:'VIS',t:'I explain the why of the change and what it enables in the mid term, so they adopt it out of conviction.'},
+     {s:'AFI',t:'I acknowledge the frustrations, allow adaptation time and make clear I am in the transition with them.'},
+     {s:'DEM',t:'I gather the team to map the pain points and define together how the local rollout will happen.'},
+     {s:'COA',t:'I identify multipliers and invest in enabling them to support their colleagues.'}]},
+ {c:'Internal audit flags compliance deviations in the team\u2019s RFQ process.',
+  o:[{s:'VIS',t:'I use the episode to reinforce why integrity is non-negotiable in our vision and redirect the process from there.'},
+     {s:'AFI',t:'I avoid exposing culprits: I handle it with care to correct course without breaking the group\u2019s trust.'},
+     {s:'DEM',t:'I call the team in to review the process together and define the new controls.'},
+     {s:'MOD',t:'I redesign the procedure myself to the required standard and personally check the first RFQs.'}]},
+ {c:'Critical maintenance shutdown: an emergency PR must become a PO today, or the plant stops.',
+  o:[{s:'DIR',t:'I take command: I define who does what, now, with no room for debate — we discuss it later.'},
+     {s:'DEM',t:'I call a lightning meeting with those involved so we quickly decide the best path.'},
+     {s:'MOD',t:'I take the case myself and solve it — no one issues an emergency PO faster than I do.'},
+     {s:'COA',t:'I put a developing buyer in charge, with my close support — real pressure teaches.'}]},
+ {c:'A senior buyer, technically excellent, keeps steamrolling colleagues and hoarding information.',
+  o:[{s:'DIR',t:'I am direct: I set clear conduct rules and make the consequences of ignoring them explicit.'},
+     {s:'AFI',t:'I invest in the relationship: I talk about the impact on the group and bet on the bond to change them.'},
+     {s:'MOD',t:'I start giving the most visible work to those who collaborate — the standard I reward speaks for itself.'},
+     {s:'COA',t:'I give structured feedback and build with them a development plan for interpersonal skills.'}]},
+ {c:'You need to assign a new category whose supply market no one on the team knows.',
+  o:[{s:'DIR',t:'I appoint who takes it, with scope and deadlines defined by me.'},
+     {s:'AFI',t:'I ask who would feel comfortable taking it and respect where each person is.'},
+     {s:'DEM',t:'I present the category to the team and we decide together who takes it and how support will work.'},
+     {s:'COA',t:'I choose with development in mind: I give it to whoever the category will grow the most, with my mentoring.'}]},
+ {c:'Month-end, a high PO backlog and a visibly tired team.',
+  o:[{s:'DIR',t:'I prioritize the queue myself, redistribute the tasks and determine what goes out today.'},
+     {s:'AFI',t:'I ease the pressure: I recognize the effort, look after the team and negotiate deadlines with the internal clients.'},
+     {s:'DEM',t:'I gather everyone for 15 minutes so we set the priorities together and who takes what.'},
+     {s:'MOD',t:'I step into the operation: I take a slice of the backlog and set the pace.'}]},
+ {c:'A buyer proposes changing a process that has worked for years (e.g., a new RFQ flow).',
+  o:[{s:'DIR',t:'I thank them but keep the current one: change only with my validation and at the right time.'},
+     {s:'VIS',t:'I assess whether the idea moves us toward where the area wants to go; if so, I sponsor the change.'},
+     {s:'MOD',t:'I say: show me a pilot running with better results than the current one, and we change.'},
+     {s:'COA',t:'I guide them to structure the proposal — data, risks, gains — and to defend it. It is a chance to grow.'}]},
+ {c:'It is time to set the team\u2019s individual goals for the year.',
+  o:[{s:'DIR',t:'I set each person\u2019s goals based on what the operation needs and communicate them.'},
+     {s:'VIS',t:'I start from the area\u2019s strategy and translate the vision into goals that show each role\u2019s contribution.'},
+     {s:'DEM',t:'I build them in conversations: each person proposes theirs, we discuss and close together.'},
+     {s:'COA',t:'I anchor them in development: each goal links a delivery to a competency to grow.'}]},
+ {c:'Your leadership asks for a complex report by tomorrow morning, and the team is already overloaded.',
+  o:[{s:'DIR',t:'I escalate: I pull someone off another task, define the format and follow closely until it goes out.'},
+     {s:'VIS',t:'I explain to the team why this report matters for the area\u2019s image and ask for the extra effort with meaning.'},
+     {s:'DEM',t:'I ask the team how they prefer to organize to deliver without sacrificing what is critical.'},
+     {s:'MOD',t:'I do it myself — faster than stopping someone, and it comes out to my standard.'}]},
+ {c:'A team member badly botches a negotiation, and the supplier complains straight to your director.',
+  o:[{s:'DIR',t:'I correct it immediately: I take over the supplier account, set the direction and make clear it can\u2019t happen again.'},
+     {s:'VIS',t:'I use the case to realign the team with the supplier-relationship standard we want to build.'},
+     {s:'AFI',t:'First I protect the person: I absorb the director\u2019s pressure and later talk calmly, with no punitive tone.'},
+     {s:'COA',t:'I turn it into learning: we review the negotiation together, what they would do differently, and I run scenarios with them.'}]},
+ {c:'How do you run the team\u2019s weekly meetings?',
+  o:[{s:'DIR',t:'My agenda, objective: status, pending items and directions. Short and focused.'},
+     {s:'VIS',t:'I open by connecting the week to the area\u2019s and the company\u2019s bigger goals.'},
+     {s:'AFI',t:'I make room for the people: how they are doing, what they need, what to celebrate — numbers come after.'},
+     {s:'MOD',t:'Performance focus: the KPI dashboard on screen, who is above and below, and how to raise the bar.'}]},
+ {c:'A coordinator position opens in your structure. How do you decide whom to nominate?',
+  o:[{s:'DIR',t:'My call: I nominate whoever I judge ready and communicate it to the team.'},
+     {s:'VIS',t:'I nominate whoever best carries the area\u2019s vision and can inspire the others.'},
+     {s:'AFI',t:'I weigh the human factor heavily: whom the team respects and who will keep the group united.'},
+     {s:'DEM',t:'I open the process: transparent criteria, applications and an assessment involving the team and HR.'}]}
+];
+
+/* ================= STATE ================= */
+
+const $=id=>document.getElementById(id);
+let ordem=[], respostas=[], idx=0, nomeUser='';
+
+function embaralhar(a){
+  const b=a.slice();
+  for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+  return b;
+}
+
+function iniciar(){
+  nomeUser=$('nome').value.trim();
+  ordem=QUESTOES.map(q=>({c:q.c,o:embaralhar(q.o)}));
+  respostas=new Array(QUESTOES.length).fill(null);
+  idx=0;
+  $('intro').hidden=true;$('result').hidden=true;$('quiz').hidden=false;
+  montarTicks();renderQ();
+  window.scrollTo({top:0});
+}
+
+function montarTicks(){
+  $('ticks').innerHTML=QUESTOES.map(()=>'<span></span>').join('');
+}
+
+function atualizarTicks(){
+  [...$('ticks').children].forEach((el,i)=>{
+    el.className = respostas[i]? 'done' : (i===idx? 'atual':'');
+  });
+}
+
+function renderQ(){
+  const q=ordem[idx];
+  $('q-num').textContent='Scenario '+String(idx+1).padStart(2,'0')+'/15';
+  $('btn-voltar').hidden = idx===0;
+  atualizarTicks();
+  const area=$('q-area');
+  area.innerHTML='';
+  const box=document.createElement('div');
+  box.className='fade';
+  box.innerHTML='<div class="cenario"><h2>'+q.c+'</h2></div>';
+  const ops=document.createElement('div');
+  ops.className='opcoes';
+  q.o.forEach(op=>{
+    const b=document.createElement('button');
+    b.type='button';b.className='opcao';b.textContent=op.t;
+    if(respostas[idx]===op.s) b.classList.add('selected');
+    b.addEventListener('click',()=>escolher(op.s,b,ops));
+    ops.appendChild(b);
+  });
+  box.appendChild(ops);
+  area.appendChild(box);
+}
+
+function escolher(s,btn,ops){
+  respostas[idx]=s;
+  [...ops.children].forEach(b=>{b.classList.remove('selected');b.disabled=true;});
+  btn.classList.add('selected');
+  atualizarTicks();
+  setTimeout(()=>{
+    if(idx<QUESTOES.length-1){idx++;renderQ();window.scrollTo({top:0,behavior:'smooth'});}
+    else{mostrarResultado();}
+  },260);
+}
+
+$('btn-voltar').addEventListener('click',()=>{if(idx>0){idx--;renderQ();}});
+$('btn-iniciar').addEventListener('click',iniciar);
+$('btn-refazer').addEventListener('click',iniciar);
+
+/* ================= RESULTS ================= */
+
+let ultimoResumo='';
+
+function desenharRadar(cont,EST,cor){
+  const chaves=Object.keys(EST), n=chaves.length;
+  const cx=190, cy=152, R=96;
+  const maxC=Math.max.apply(null,Object.values(cont))||1;
+  const ang=i=>(i*360/n-90)*Math.PI/180;
+  const pt=(i,r)=>[(cx+Math.cos(ang(i))*r).toFixed(1),(cy+Math.sin(ang(i))*r).toFixed(1)];
+  let s='<svg viewBox="0 0 380 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Profile radar">';
+  [0.25,0.5,0.75,1].forEach(f=>{
+    s+='<polygon points="'+chaves.map((k,i)=>pt(i,R*f).join(',')).join(' ')+'" fill="none" stroke="var(--linha)"'+(f<1?' stroke-dasharray="3 3"':'')+'/>';
+  });
+  chaves.forEach((k,i)=>{const p=pt(i,R);s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'" stroke="var(--linha)"/>';});
+  s+='<polygon points="'+chaves.map((k,i)=>pt(i,R*cont[k]/maxC).join(',')).join(' ')+'" fill="'+cor+'" fill-opacity=".16" stroke="'+cor+'" stroke-width="2" stroke-linejoin="round"/>';
+  chaves.forEach((k,i)=>{const p=pt(i,R*cont[k]/maxC);s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="'+EST[k].cor+'" stroke="#fff" stroke-width="1.5"/>';});
+  chaves.forEach((k,i)=>{
+    const p=pt(i,R+16), co=Math.cos(ang(i)), si=Math.sin(ang(i));
+    const anc=co>0.25?'start':(co<-0.25?'end':'middle');
+    const dy=si<-0.25?-4:(si>0.25?12:4);
+    s+='<text x="'+p[0]+'" y="'+(parseFloat(p[1])+dy)+'" text-anchor="'+anc+'" style="font-family:\'IBM Plex Sans\',sans-serif;font-size:12px;font-weight:600" fill="var(--tinta)">'+EST[k].nome+'</text>';
+    s+='<text x="'+p[0]+'" y="'+(parseFloat(p[1])+dy+13)+'" text-anchor="'+anc+'" style="font-family:\'IBM Plex Mono\',monospace;font-size:10.5px" fill="var(--cinza)">'+cont[k]+'/15</text>';
+  });
+  s+='</svg>';
+  return s;
+}
+
+function mostrarResultado(){
+  const cont={DIR:0,VIS:0,AFI:0,DEM:0,MOD:0,COA:0};
+  respostas.forEach(s=>cont[s]++);
+  const ordenado=Object.keys(cont).sort((a,b)=>cont[b]-cont[a]);
+  const top=ordenado[0], topN=cont[top];
+  const empates=ordenado.filter(k=>cont[k]===topN);
+  const sec=ordenado.find(k=>!empates.includes(k));
+  const E=ESTILOS[top];
+
+  /* hero */
+  let h='<span class="mono">Result'+(nomeUser?' &middot; '+nomeUser:'')+' &middot; Dominant style &middot; '+topN+'/15 answers</span>';
+  h+='<h2>'+E.nome+'</h2><div class="lema">'+E.lema+'</div><p class="ess">'+E.ess+'</p>';
+  if(empates.length>1){
+    h+='<p class="empate">Tied with: <b>'+empates.slice(1).map(k=>ESTILOS[k].nome).join(', ')+'</b> — worth reading both profiles below.</p>';
+  }
+  if(sec && cont[sec]>0){
+    h+='<p class="secundario">Backup style: <b>'+ESTILOS[sec].nome+'</b> ('+cont[sec]+'/15) — where you tend to go when the dominant one doesn\u2019t cut it.</p>';
+  }
+  $('hero').innerHTML=h;
+  $('hero').style.borderLeftColor=E.cor;
+
+  /* radar */
+  $('radar-svg').innerHTML=desenharRadar(cont,ESTILOS,E.cor);
+
+  /* versatility */
+  const usados=Object.values(cont).filter(n=>n>=2).length;
+  let v;
+  if(topN>=8){
+    v='<b>A concentrated profile.</b> More than half of your answers fell into a single style. That gives the team predictability — they know what to expect from you — but not every situation responds to the same stimulus. The research behind the model shows the best-performing leaders master four or more styles and switch with the context.';
+  }else if(usados>=4 && topN<=5){
+    v='<b>A versatile profile.</b> You spread your answers across several styles — in Goleman\u2019s research, that is the pattern of leaders with the best climate and results: reading the situation and switching styles as the context demands.';
+  }else{
+    v='<b>A clear style, with backup range.</b> You have a recognizable signature and reach for other styles when it is not enough. The next step is situational awareness: noticing in real time when the dominant style helps and when another would serve better.';
+  }
+  $('versat').innerHTML=v;
+  const menor=ordenado[ordenado.length-1], eMenor=ESTILOS[menor];
+  if(cont[menor]<topN){
+    $('versat').innerHTML += '<p style="margin-top:10px">Range to grow: the style you used least was <b>'+eMenor.nome+'</b> ('+cont[menor]+'/15). It\u2019s worth training it in the situations where it works best: '+eMenor.bom.charAt(0).toLowerCase()+eMenor.bom.slice(1)+'</p>';
+  }
+
+  /* bars */
+  $('barras').innerHTML=ordenado.map(k=>{
+    const e=ESTILOS[k], pct=Math.round(cont[k]/15*100);
+    return '<div class="barra"><span class="nome">'+e.nome+'</span>'+
+      '<div class="trilho"><div class="fill" style="width:'+pct+'%;background:'+e.cor+'"></div></div>'+
+      '<span class="num">'+cont[k]+'/15</span></div>';
+  }).join('');
+
+  /* details */
+  $('detalhes').innerHTML=ordenado.map((k,i)=>{
+    const e=ESTILOS[k];
+    return '<details'+(i===0?' open':'')+'><summary><span class="dot" style="background:'+e.cor+'"></span>'+e.nome+
+      '<span class="lm">'+e.lema+'</span></summary>'+
+      '<div class="det-corpo">'+
+      '<p><b>Essence</b>'+e.ess+'</p>'+
+      '<p><b>Works well in</b>'+e.bom+'</p>'+
+      '<p><b>Risk</b>'+e.risco+'</p>'+
+      '<p><b>In practice, in procurement</b>'+e.dica+'</p>'+
+      '</div></details>';
+  }).join('');
+
+  /* copy summary */
+  ultimoResumo='Management style'+(nomeUser?' — '+nomeUser:'')+'\n'+
+    'Dominant: '+E.nome+' ('+topN+'/15)'+
+    (empates.length>1?' | Tied: '+empates.slice(1).map(k=>ESTILOS[k].nome).join(', '):'')+
+    (sec&&cont[sec]>0?' | Backup: '+ESTILOS[sec].nome+' ('+cont[sec]+'/15)':'')+'\n'+
+    'Split: '+ordenado.map(k=>ESTILOS[k].nome+' '+cont[k]).join(' · ');
+
+  $('quiz').hidden=true;$('result').hidden=false;
+  window.scrollTo({top:0});
+}
+
+$('btn-copiar').addEventListener('click',async()=>{
+  const btn=$('btn-copiar');
+  try{
+    await navigator.clipboard.writeText(ultimoResumo);
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=ultimoResumo;document.body.appendChild(ta);
+    ta.select();document.execCommand('copy');ta.remove();
+  }
+  const orig=btn.textContent;
+  btn.textContent='Copied ✓';
+  setTimeout(()=>{btn.textContent=orig;},2000);
+});
+</script>
+</body>
+</html>
