@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estilo de Gestão · Management Style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --papel:#F5F6F4;
+    --tinta:#131917;
+    --cinza:#5B615E;
+    --linha:#D8DCD7;
+    --branco:#FFFFFF;
+    --petroleo:#0B5A50;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--papel);
+    color:var(--tinta);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    font-size:16px;line-height:1.55;
+    padding:20px 16px 64px;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+  .mono{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza)}
+  h1,h2,h3{font-family:'Archivo',sans-serif;letter-spacing:-.015em}
+
+  .masthead{padding:8px 0 24px;border-bottom:1px solid var(--linha);margin-bottom:26px}
+  .masthead .mono{display:block;margin-bottom:10px}
+  .masthead h1{font-size:clamp(27px,6vw,38px);font-weight:800;line-height:1.08}
+  .masthead p{margin-top:10px;color:var(--cinza);max-width:58ch}
+
+  .cards{display:grid;gap:12px;margin-bottom:26px}
+  .card{
+    display:block;text-decoration:none;color:var(--tinta);
+    background:var(--branco);border:1px solid var(--linha);border-left:4px solid var(--linha);
+    border-radius:12px;padding:18px;transition:border-color .12s,background .12s;
+  }
+  .card:hover{border-left-color:var(--petroleo);background:#FBFCFB}
+  .card .idx{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--petroleo)}
+  .card h3{font-size:19px;font-weight:700;margin:6px 0 4px}
+  .card .desc{color:var(--cinza);font-size:14.5px}
+  .card .meta{margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza)}
+  .card .go{margin-top:10px;display:inline-block;font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;color:var(--petroleo)}
+
+  .rodape{margin-top:8px;padding-top:18px;border-top:1px solid var(--linha);font-size:13px;color:var(--cinza)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="mono">Compras &middot; Procurement</span>
+    <h1>Estilo de gestão &middot; Management style</h1>
+    <p>Uma autoavaliação para quem lidera (ou quer liderar) times de compras, baseada nos 6 estilos de liderança de Daniel Goleman. &middot; A self-assessment for those who lead (or want to lead) procurement teams, based on Daniel Goleman&rsquo;s six leadership styles.</p>
+  </header>
+
+  <div class="cards">
+    <a class="card" href="quiz-estilo-gestao.html">
+      <span class="idx">Português (BR)</span>
+      <h3>Qual é o seu estilo de gestão?</h3>
+      <p class="desc">15 cenários reais de gestão de compras — RC emergencial, meta de saving, conflito no time, auditoria, sucessão. Resultado com radar do perfil, estilo de apoio e repertório a desenvolver.</p>
+      <div class="meta">6 estilos &middot; 15 cenários &middot; 5–7 min</div>
+      <span class="go">Começar &rarr;</span>
+    </a>
+    <a class="card" href="procurement-manager-style-en.html">
+      <span class="idx">English</span>
+      <h3>What is your management style?</h3>
+      <p class="desc">15 real procurement-management scenarios — the emergency PR, the savings target, team conflict, the audit finding, succession. Results with a profile radar, your backup style and the range to grow.</p>
+      <div class="meta">6 styles &middot; 15 scenarios &middot; 5–7 min</div>
+      <span class="go">Start &rarr;</span>
+    </a>
+  </div>
+
+  <p class="rodape">Baseado nos seis estilos de liderança de Daniel Goleman ("Leadership That Gets Results", HBR, 2000). Instrumento de autopercepção para reflexão e desenvolvimento — não é avaliação de desempenho. &middot; Based on Daniel Goleman&rsquo;s six leadership styles ("Leadership That Gets Results", HBR, 2000). A self-perception instrument for reflection and development — not a performance review.</p>
+
+</div>
+</body>
+</html>
